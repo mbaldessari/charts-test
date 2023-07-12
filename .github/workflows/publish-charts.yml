@@ -57,9 +57,10 @@ jobs:
           helm package helm-repo/${{ inputs.TEMPLATE_DIR }}
           CHART_NAME=$(yq '.name' helm-repo/Chart.yaml)
           CHART_VERSION=$(yq '.version' helm-repo/Chart.yaml)
-          echo "CHART_TGZ=${CHART_NAME}-${CHART_VERSION}.tgz" >> $GITHUB_ENV
+          CHART_TGZ="${CHART_NAME}-${CHART_VERSION}.tgz"
+          echo "CHART_TGZ=${CHART_TGZ}" >> $GITHUB_ENV
           mkdir -p ./releases/download/main/
-          cp -v ${{ env.CHART_NAME }}-${{ env.CHART_VERSION }}.tgz ./releases/download/main/
+          cp -v "${CHART_TGZ}" ./releases/download/main/
       - name: upload helm package in release
         uses: svenstaro/upload-release-action@v2
         with:
