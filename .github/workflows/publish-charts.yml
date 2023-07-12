@@ -25,7 +25,7 @@ env:
 jobs:
   update-charts:
     if: ${{ inputs.SOURCE_TAG }}
-    runs-on: [ linux ]
+    runs-on: ubuntu-latest
     permissions:
       id-token: write
       contents: read
