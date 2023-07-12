@@ -51,6 +51,15 @@ jobs:
         run: |-
           set -euo pipefail
           helm package helm-repo/${{ inputs.TEMPLATE_DIR }}
+      - name: upload helm package in release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: test-0.0.1.tgz
+          asset_name: test-0.0.1.tgz
+          tag: ${{ github.ref }}
+          body: "test-0.0.1 yoohoo"
+          overwrite: true
       - name: update helm index
         run: |-
           set -e
