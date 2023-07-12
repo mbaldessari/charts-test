@@ -58,9 +58,9 @@ jobs:
           CHART_NAME=$(yq '.name' helm-repo/Chart.yaml)
           CHART_VERSION=$(yq '.version' helm-repo/Chart.yaml)
           CHART_TGZ="${CHART_NAME}-${CHART_VERSION}.tgz"
+          echo "CHART_NAME=$(yq '.name' helm-repo/Chart.yaml)" >> $GITHUB_ENV
+          echo "CHART_VERSION=$(yq '.version' helm-repo/Chart.yaml)" >> $GITHUB_ENV
           echo "CHART_TGZ=${CHART_TGZ}" >> $GITHUB_ENV
-          mkdir -p ./releases/download/main/
-          cp -v "${CHART_TGZ}" ./releases/download/main/
       - name: upload helm package in release
         uses: svenstaro/upload-release-action@v2
         with:
@@ -68,12 +68,22 @@ jobs:
           file: ${{ env.CHART_TGZ }}
           asset_name: ${{ env.CHART_TGZ }}
           tag: ${{ github.ref }}
-          body: "${{ env.CHART_TGZ }} Release"
+          body: "${{ env.CHART_NAME }} Released ${{ env.CHART_VERSION }}"
           overwrite: true
           # Uploaded to https://github.com/mbaldessari/charts-test/releases/download/main/test-0.0.1.tgz
       - name: update helm index
         run: |-
           set -e
-          #helm repo index --url https://mbaldessari.github.io/vp-helm-charts/ --merge index.yaml .
-          helm repo index --url https://mbaldessari.github.io/vp-helm-charts/ --merge index.yaml ./releases/download/main/
+          helm repo index --url https://mbaldessari.github.io/charts-test/releases/download/main/ --merge index.yaml .
           cat index.yaml
+            - name: Checkout Code
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          # Full git history is needed to get a proper list of changed files within `super-linter`
+          fetch-depth: 0
+      - name: Commit to gh-pages
+        run: |-
+          set -e
+          ls -la
+
