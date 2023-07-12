@@ -55,19 +55,24 @@ jobs:
         run: |-
           set -euo pipefail
           helm package helm-repo/${{ inputs.TEMPLATE_DIR }}
-          echo "CHART_NAME=$(yq '.name' helm-repo/Chart.yaml)" >> $GITHUB_ENV
-          echo "CHART_VERSION=$(yq '.version' helm-repo/Chart.yaml)" >> $GITHUB_ENV
+          CHART_NAME=$(yq '.name' helm-repo/Chart.yaml)
+          CHART_VERSION=$(yq '.version' helm-repo/Chart.yaml)
+          echo "CHART_TGZ=${CHART_NAME}-${CHART_VERSION}.tgz" >> $GITHUB_ENV
+          mkdir -p ./releases/download/main/
+          cp -v ${{ env.CHART_NAME }}-${{ env.CHART_VERSION }}.tgz ./releases/download/main/
       - name: upload helm package in release
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: ${{ env.CHART_NAME }}-${{ env.CHART_VERSION }}.tgz
-          asset_name: ${{ env.CHART_NAME }}-${{ env.CHART_VERSION }}.tgz
+          file: ${{ env.CHART_TGZ }}
+          asset_name: ${{ env.CHART_TGZ }}
           tag: ${{ github.ref }}
-          body: "${{ env.CHART_NAME }}-${{ env.CHART_VERSION }} Release"
+          body: "${{ env.CHART_TGZ }} Release"
           overwrite: true
+          # Uploaded to https://github.com/mbaldessari/charts-test/releases/download/main/test-0.0.1.tgz
       - name: update helm index
         run: |-
           set -e
-          helm repo index --url https://mbaldessari.github.io/vp-helm-charts/ --merge index.yaml .
+          #helm repo index --url https://mbaldessari.github.io/vp-helm-charts/ --merge index.yaml .
+          helm repo index --url https://mbaldessari.github.io/vp-helm-charts/ --merge index.yaml ./releases/download/main/
           cat index.yaml
