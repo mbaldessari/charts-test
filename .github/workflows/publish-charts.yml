@@ -35,6 +35,9 @@ jobs:
         uses: azure/setup-helm@v3
         with:
           version: v3.12.1
+      - name: setup tools
+        run: |-
+          sudo apt-get install -y yq
       - name: clone helm repo
         env:
           SOURCE_BRANCH_OVERRIDE: ${{ inputs.SOURCE_BRANCH_OVERRIDE }}
@@ -52,14 +55,16 @@ jobs:
         run: |-
           set -euo pipefail
           helm package helm-repo/${{ inputs.TEMPLATE_DIR }}
+          echo "CHART_NAME=$(yq '.name' helm-repo/Chart.yaml)" >> $GITHUB_ENV
+          echo "CHART_VERSION=$(yq '.version' helm-repo/Chart.yaml)" >> $GITHUB_ENV
       - name: upload helm package in release
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: test-0.0.1.tgz
-          asset_name: test-0.0.1.tgz
+          file: ${{ env.CHART_NAME }}-${{ env.CHART_VERSION }}.tgz
+          asset_name: ${{ env.CHART_NAME }}-${{ env.CHART_VERSION }}.tgz
           tag: ${{ github.ref }}
-          body: "test-0.0.1 yoohoo"
+          body: "${{ env.CHART_NAME }}-${{ env.CHART_VERSION }} Release"
           overwrite: true
       - name: update helm index
         run: |-
