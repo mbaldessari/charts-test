@@ -86,6 +86,7 @@ jobs:
       - name: Commit to gh-pages
         run: |-
           set -e
+          cp -v index.yaml git-repo/
           cd git-repo
           git remote -v
           git checkout gh-pages
