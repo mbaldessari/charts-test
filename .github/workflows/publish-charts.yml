@@ -76,7 +76,6 @@ jobs:
           set -e
           helm repo index --url https://mbaldessari.github.io/charts-test/releases/download/main/ --merge index.yaml .
           cat index.yaml
-            - name: Checkout Code
       - name: Checkout code
         uses: actions/checkout@v3
         with:
