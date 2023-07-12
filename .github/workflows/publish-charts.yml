@@ -26,9 +26,10 @@ jobs:
   update-charts:
     if: ${{ inputs.SOURCE_TAG }}
     runs-on: ubuntu-latest
-    permissions:
-      id-token: write
-      contents: read
+    permissions: write-all
+    # permissions:
+    #   id-token: write
+    #   contents: read
     steps:
       - name: Install Helm
         uses: azure/setup-helm@v3
