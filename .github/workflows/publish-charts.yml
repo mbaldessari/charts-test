@@ -37,7 +37,7 @@ jobs:
           version: v3.12.1
       - name: setup tools
         run: |-
-          sudo apt-get install -y yq
+          sudo curl -L -o /usr/local/bin/yq https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64
       - name: clone helm repo
         env:
           SOURCE_BRANCH_OVERRIDE: ${{ inputs.SOURCE_BRANCH_OVERRIDE }}
