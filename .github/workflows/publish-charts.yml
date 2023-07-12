@@ -88,6 +88,8 @@ jobs:
           set -e
           cp -v index.yaml git-repo/
           cd git-repo
+          git config --global user.name "Test"
+          git config --global user.email "test@acksyn.org"
           git remote -v
           git checkout gh-pages
           git add index.yaml
