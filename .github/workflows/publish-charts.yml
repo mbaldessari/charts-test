@@ -1,3 +1,7 @@
+# This workflow is expected to be run by the git workflow of the remote
+# chart whenever a new target is pushed:
+# gh workflow run publish-charts.yml --repo mbaldessari/charts-test --ref main \
+#   -f SOURCE_TAG="v0.0.1" -f SOURCE_REPO="mbaldessari/helm-chart-test"
 name: vp-patterns/publish-charts
 on:
   workflow_dispatch:
@@ -26,19 +30,19 @@ jobs:
   update-charts:
     if: ${{ inputs.SOURCE_TAG }}
     runs-on: ubuntu-latest
+    # FIXME(bandini): reduce these permissions a bit
     permissions: write-all
-    # permissions:
-    #   id-token: write
-    #   contents: read
     steps:
       - name: Install Helm
         uses: azure/setup-helm@v3
         with:
           version: v3.12.1
-      - name: setup tools
+
+      - name: Setup yq
         run: |-
           sudo curl -L -o /usr/local/bin/yq https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64
-      - name: clone helm repo
+
+      - name: Clone remote helm repo
         env:
           SOURCE_BRANCH_OVERRIDE: ${{ inputs.SOURCE_BRANCH_OVERRIDE }}
         run: |-
@@ -50,7 +54,8 @@ jobs:
             git clone "https://github.com/${SOURCE_REPO}.git" \
               --branch "${SOURCE_TAG}" --single-branch helm-repo
           fi
-      - name: helm package
+
+      - name: Package the helm chart
         shell: bash
         run: |-
           set -euo pipefail
@@ -61,7 +66,17 @@ jobs:
           echo "CHART_NAME=$(yq '.name' helm-repo/Chart.yaml)" >> $GITHUB_ENV
           echo "CHART_VERSION=$(yq '.version' helm-repo/Chart.yaml)" >> $GITHUB_ENV
           echo "CHART_TGZ=${CHART_TGZ}" >> $GITHUB_ENV
-      - name: upload helm package in release
+
+          # Some rudimentary parsing of the version. The chart *must* use the simple semantic versioning
+          # so x.y.z only atm
+          CHART_MAJ=$(yq '.version | (split(".") | .[0])' Chart.yaml)
+          CHART_MIN=$(yq '.version | (split(".") | .[1])' Chart.yaml)
+          CHART_PATCHLEVEL=$(yq '.version | (split(".") | .[2])' Chart.yaml)
+          echo "CHART_MAJ=${CHART_MAJ}" >> $GITHUB_ENV
+          echo "CHART_MIN=${CHART_MIN}" >> $GITHUB_ENV
+          echo "CHART_PATCHLEVEL=${CHART_PATCHLEVEL}" >> $GITHUB_ENV
+
+      - name: Upload helm package as a release asset
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
@@ -71,26 +86,28 @@ jobs:
           body: "${{ env.CHART_NAME }} Released ${{ env.CHART_VERSION }}"
           overwrite: true
           # Uploaded to https://github.com/mbaldessari/charts-test/releases/download/main/test-0.0.1.tgz
-      - name: update helm index
+
+      - name: Update the helm index.yaml file
         run: |-
           set -e
           helm repo index --url https://mbaldessari.github.io/charts-test/releases/download/main/ --merge index.yaml .
           cat index.yaml
           echo "HELM_DIR=${PWD}" >> $GITHUB_ENV
-      - name: Checkout code
+
+      - name: Checkout code to git-repo folder
         uses: actions/checkout@v3
         with:
           # Full git history is needed to get a proper list of changed files within `super-linter`
           fetch-depth: 0
           path: git-repo
+
       - name: Commit to gh-pages
         run: |-
           set -e
           cp -v index.yaml git-repo/
           cd git-repo
-          git config --global user.name "Test"
-          git config --global user.email "test@acksyn.org"
-          git remote -v
+          git config --global user.name "GH Pages index yaml"
+          git config --global user.email "michele+gh@acksyn.org"
           git checkout gh-pages
           git add index.yaml
           git commit index.yaml -m "Updated ${{ env.CHART_NAME }}-${{ env.CHART_VERSION }}"
