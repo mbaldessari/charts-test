@@ -78,6 +78,8 @@ jobs:
       # While this probably does not scale all too well it should be fine for our not too large
       # helm repo
       - name: Fetch all assets locally
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |-
           set -e
           for i in $(gh api repos/${UMBRELLA_REPO}/releases/latest | jq -r ".assets[].browser_download_url"); do
