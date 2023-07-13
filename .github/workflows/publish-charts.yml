@@ -12,10 +12,6 @@ on:
       SOURCE_REPO:
         required: true
         description: The helm chart repo
-      TEMPLATE_DIR:
-        required: false
-        description: The path relative to the SOURCE_REPO where Chart.yaml and the templates directory is
-        default: ""
       SOURCE_BRANCH_OVERRIDE:
         required: false
         description: If specified, checks out the head of this branch rather than the commit tagged by SOURCE_TAG
@@ -25,6 +21,7 @@ env:
   SOURCE_TAG: "${{ inputs.SOURCE_TAG }}"
   SOURCE_REPO: "${{ inputs.SOURCE_REPO }}"
   SOURCE_BRANCH_OVERRIDE: "${{ inputs.SOURCE_BRANCH_OVERRIDE }}"
+  ASSETS_BASE_URL: "https://github.com/mbaldessari/charts-test/releases/download/main/"
 
 jobs:
   update-charts:
@@ -90,9 +87,9 @@ jobs:
       - name: Update the helm index.yaml file
         run: |-
           set -e
-          helm repo index --url https://mbaldessari.github.io/charts-test/releases/download/main/ --merge index.yaml .
+          helm repo index --url "${ASSETS_BASE_URL}" --merge index.yaml .
+          # FIXME(bandini): this is for debugging only
           cat index.yaml
-          echo "HELM_DIR=${PWD}" >> $GITHUB_ENV
 
       - name: Checkout code to git-repo folder
         uses: actions/checkout@v3
