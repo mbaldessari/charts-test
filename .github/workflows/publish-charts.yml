@@ -35,10 +35,6 @@ jobs:
         with:
           version: v3.12.1
 
-      - name: Setup yq
-        run: |-
-          sudo curl -L -o /usr/local/bin/yq https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64
-
       - name: Clone remote helm repo
         env:
           SOURCE_BRANCH_OVERRIDE: ${{ inputs.SOURCE_BRANCH_OVERRIDE }}
