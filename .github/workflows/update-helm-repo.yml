@@ -24,7 +24,7 @@ jobs:
             echo "chart version (${chart_tag}) did not match git version (${git_tag})"
             exit 1
           fi
-      - name: Invoke umbreall-repo publish charts workflow
+      - name: Invoke umbrella-repo publish charts workflow
         id: update
         # env:
         #   GH_TOKEN: ${{ secrets.HELM_CHARTS_GITHUB_TOKEN }}
