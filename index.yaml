@@ -3,12 +3,22 @@ entries:
   test:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2023-07-13T06:01:07.791437341Z"
+    created: "2023-07-13T06:06:42.851511157Z"
     description: A Helm chart for Kubernetes
-    digest: bcd6d3542b52a9a43a55cbcad8816375bb845c801fb48693ebfcfd560541eb0a
+    digest: b0c4c4cc1b37482bf78ad1931a09cfba751a55ee7ffef55eb6370e222fe15a71
     name: test
     type: application
     urls:
     - https://github.com/mbaldessari/charts-test/releases/download/main/test-0.0.2.tgz
     version: 0.0.2
-generated: "2023-07-13T06:01:07.791070439Z"
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2023-07-13T06:06:42.851318256Z"
+    description: A Helm chart for Kubernetes
+    digest: 9724012c8121ec28d04e28868fb7bc003591ec5c29e08d58ab4b01bd459992de
+    name: test
+    type: application
+    urls:
+    - https://github.com/mbaldessari/charts-test/releases/download/main/test-0.0.1.tgz
+    version: 0.0.1
+generated: "2023-07-13T06:06:42.850930655Z"
