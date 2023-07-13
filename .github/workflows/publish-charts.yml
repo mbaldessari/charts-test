@@ -108,7 +108,8 @@ jobs:
           git config --global user.name "GH Pages index yaml"
           git config --global user.email "michele+gh@acksyn.org"
           git checkout gh-pages
-          cp -fv index.yaml git-repo/
+          # This copies the newly generated index.yaml to the git repo
+          cp -fv ../index.yaml .
           git add index.yaml
           git commit index.yaml -m "Updated ${{ env.CHART_NAME }}-${{ env.CHART_VERSION }}"
           git push origin gh-pages
