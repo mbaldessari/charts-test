@@ -104,8 +104,8 @@ jobs:
         run: |-
           set -e
           cd git-repo
-          git config --global user.name "GH Pages index yaml"
-          git config --global user.email "michele+gh@acksyn.org"
+          git config user.name "${{ github.actor }}"
+          git config user.email "${{ github.actor }}@users.noreply.github.com"
           git checkout gh-pages
           # This copies the newly generated index.yaml to the git repo
           cp -fv ../index.yaml .
