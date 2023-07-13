@@ -21,7 +21,8 @@ env:
   SOURCE_TAG: "${{ inputs.SOURCE_TAG }}"
   SOURCE_REPO: "${{ inputs.SOURCE_REPO }}"
   SOURCE_BRANCH_OVERRIDE: "${{ inputs.SOURCE_BRANCH_OVERRIDE }}"
-  ASSETS_BASE_URL: "https://github.com/mbaldessari/charts-test/releases/download/main/"
+  UMBRELLA_REPO: "mbaldessari/charts-test"
+  ASSETS_BASE_URL: "https://github.com/${{ UMBRELLA_REPO }}/releases/download/main/"
 
 jobs:
   update-charts:
@@ -60,15 +61,6 @@ jobs:
           echo "CHART_VERSION=$(yq -r '.version' helm-repo/Chart.yaml)" >> $GITHUB_ENV
           echo "CHART_TGZ=${CHART_TGZ}" >> $GITHUB_ENV
 
-          # Some rudimentary parsing of the version. The chart *must* use the
-          # simple semantic versioning, so x.y.z only atm
-          CHART_MAJ=$(yq -r '.version | (split(".") | .[0])' helm-repo/Chart.yaml)
-          CHART_MIN=$(yq -r '.version | (split(".") | .[1])' helm-repo/Chart.yaml)
-          CHART_PATCHLEVEL=$(yq -r '.version | (split(".") | .[2])' helm-repo/Chart.yaml)
-          echo "CHART_MAJ=${CHART_MAJ}" >> $GITHUB_ENV
-          echo "CHART_MIN=${CHART_MIN}" >> $GITHUB_ENV
-          echo "CHART_PATCHLEVEL=${CHART_PATCHLEVEL}" >> $GITHUB_ENV
-
       - name: Upload helm package as a release asset
         uses: svenstaro/upload-release-action@v2
         with:
@@ -80,10 +72,22 @@ jobs:
           overwrite: true
           # Uploaded to https://github.com/mbaldessari/charts-test/releases/download/main/test-0.0.1.tgz
 
+      # This step fetches all assets and places them in the current folder
+      # The reason for doing this is that it makes things fully idempotent and we do not need
+      # to rely on the --merge feature when generating the index
+      # While this probably does not scale all too well it should be fine for our not too large
+      # helm repo
+      - name: Fetch all assets locally
+        run: |-
+          set -e
+          for i in $(gh api repos/${UMBRELLA_REPO}/releases/latest | jq -r ".assets[].browser_download_url"); do
+            curl -O -L "${i}"
+          done
+
       - name: Update the helm index.yaml file
         run: |-
           set -e
-          helm repo index --url "${ASSETS_BASE_URL}" --merge index.yaml .
+          helm repo index --url "${ASSETS_BASE_URL}" .
           # FIXME(bandini): this is for debugging only
           cat index.yaml
 
