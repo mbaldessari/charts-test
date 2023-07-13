@@ -69,9 +69,9 @@ jobs:
 
           # Some rudimentary parsing of the version. The chart *must* use the simple semantic versioning
           # so x.y.z only atm
-          CHART_MAJ=$(yq '.version | (split(".") | .[0])' Chart.yaml)
-          CHART_MIN=$(yq '.version | (split(".") | .[1])' Chart.yaml)
-          CHART_PATCHLEVEL=$(yq '.version | (split(".") | .[2])' Chart.yaml)
+          CHART_MAJ=$(yq '.version | (split(".") | .[0])' helm-repo/Chart.yaml)
+          CHART_MIN=$(yq '.version | (split(".") | .[1])' helm-repo/Chart.yaml)
+          CHART_PATCHLEVEL=$(yq '.version | (split(".") | .[2])' helm-repo/Chart.yaml)
           echo "CHART_MAJ=${CHART_MAJ}" >> $GITHUB_ENV
           echo "CHART_MIN=${CHART_MIN}" >> $GITHUB_ENV
           echo "CHART_PATCHLEVEL=${CHART_PATCHLEVEL}" >> $GITHUB_ENV
