@@ -2,7 +2,7 @@ apiVersion: v1
 entries:
   acm:
   - apiVersion: v2
-    created: "2023-07-24T07:09:27.898654879Z"
+    created: "2023-07-24T08:15:32.581954169Z"
     description: A Helm chart to configure Advanced Cluster Manager for OpenShift
     digest: 487d8cfc0a0b34453e1a23a86f3860dafb8394b5877f567a84372891ceeb84ec
     keywords:
@@ -13,7 +13,18 @@ entries:
     version: 0.0.1
   clustergroup:
   - apiVersion: v2
-    created: "2023-07-24T07:09:27.908108743Z"
+    created: "2023-07-24T08:15:32.599285399Z"
+    description: A Helm chart to create per-clustergroup ArgoCD applications and any
+      required namespaces or subscriptions
+    digest: fccc1f7b8e307e200ce54d84f37c47fa6f7b348059c08913699e2f4cf3c2955d
+    keywords:
+    - pattern
+    name: clustergroup
+    urls:
+    - https://github.com/mbaldessari/charts-test/releases/download/main/clustergroup-0.0.3.tgz
+    version: 0.0.3
+  - apiVersion: v2
+    created: "2023-07-24T08:15:32.592559971Z"
     description: A Helm chart to create per-clustergroup ArgoCD applications and any
       required namespaces or subscriptions
     digest: 72497ee44789cb5c40ed183e63393c8279395cb7b28079294296e4686e97d9c0
@@ -24,7 +35,7 @@ entries:
     - https://github.com/mbaldessari/charts-test/releases/download/main/clustergroup-0.0.2.tgz
     version: 0.0.2
   - apiVersion: v2
-    created: "2023-07-24T07:09:27.903505912Z"
+    created: "2023-07-24T08:15:32.587380072Z"
     description: A Helm chart to create per-clustergroup ArgoCD applications and any
       required namespaces or subscriptions
     digest: 1a6df225fd63321d8610b49602675a4b742d8a10299763c6a19aadd826f5337b
@@ -36,7 +47,7 @@ entries:
     version: 0.0.1
   golang-external-secrets:
   - apiVersion: v2
-    created: "2023-07-24T07:09:27.917389304Z"
+    created: "2023-07-24T08:15:32.610199006Z"
     dependencies:
     - name: external-secrets
       repository: https://charts.external-secrets.io
@@ -51,7 +62,7 @@ entries:
     version: 0.0.1
   hashicorp-vault:
   - apiVersion: v2
-    created: "2023-07-24T07:09:27.924544252Z"
+    created: "2023-07-24T08:15:32.618680767Z"
     dependencies:
     - name: vault
       repository: https://helm.releases.hashicorp.com
@@ -64,85 +75,4 @@ entries:
     urls:
     - https://github.com/mbaldessari/charts-test/releases/download/main/hashicorp-vault-0.0.1.tgz
     version: 0.0.1
-  test:
-  - apiVersion: v2
-    appVersion: 1.16.0
-    created: "2023-07-24T07:09:27.926911768Z"
-    description: A Helm chart for Kubernetes
-    digest: 4c9cbafa179440806577c501986b38cdd85144bcb3b32bf9a9597fc6437f166b
-    name: test
-    type: application
-    urls:
-    - https://github.com/mbaldessari/charts-test/releases/download/main/test-1.1.5.tgz
-    version: 1.1.5
-  - apiVersion: v2
-    appVersion: 1.16.0
-    created: "2023-07-24T07:09:27.926691067Z"
-    description: A Helm chart for Kubernetes
-    digest: c8020c0651f6d6de7b89f1f6901eee8e0c2d306011362179635d11790b7f3a2c
-    name: test
-    type: application
-    urls:
-    - https://github.com/mbaldessari/charts-test/releases/download/main/test-1.1.4.tgz
-    version: 1.1.4
-  - apiVersion: v2
-    appVersion: 1.16.0
-    created: "2023-07-24T07:09:27.926178063Z"
-    description: A Helm chart for Kubernetes
-    digest: 9fcfce0649639de88f215638f7b0380502e3379c4fee8323f127aa55a85a0d5b
-    name: test
-    type: application
-    urls:
-    - https://github.com/mbaldessari/charts-test/releases/download/main/test-1.1.3.tgz
-    version: 1.1.3
-  - apiVersion: v2
-    appVersion: 1.16.0
-    created: "2023-07-24T07:09:27.925946462Z"
-    description: A Helm chart for Kubernetes
-    digest: d50e3b78bd99766a50e197021ee5ab336401b8b34fc38d64b5d0fa98d7ed7bde
-    name: test
-    type: application
-    urls:
-    - https://github.com/mbaldessari/charts-test/releases/download/main/test-1.1.2.tgz
-    version: 1.1.2
-  - apiVersion: v2
-    appVersion: 1.16.0
-    created: "2023-07-24T07:09:27.92573376Z"
-    description: A Helm chart for Kubernetes
-    digest: c2eade4fe90d2eaabca84bff48dddd0b15180af56669f8a4b98390a6b7cbe8ad
-    name: test
-    type: application
-    urls:
-    - https://github.com/mbaldessari/charts-test/releases/download/main/test-1.1.1.tgz
-    version: 1.1.1
-  - apiVersion: v2
-    appVersion: 1.16.0
-    created: "2023-07-24T07:09:27.925518259Z"
-    description: A Helm chart for Kubernetes
-    digest: b240363aaa67249d17e41cedb4b27d4ef9ec69678678e5f50e66a2032f862d0f
-    name: test
-    type: application
-    urls:
-    - https://github.com/mbaldessari/charts-test/releases/download/main/test-1.1.0.tgz
-    version: 1.1.0
-  - apiVersion: v2
-    appVersion: 1.16.0
-    created: "2023-07-24T07:09:27.925298557Z"
-    description: A Helm chart for Kubernetes
-    digest: 4db4132978f190a6bc5d048d462ca0dbd7344ea0c459c6bdfac590128670a235
-    name: test
-    type: application
-    urls:
-    - https://github.com/mbaldessari/charts-test/releases/download/main/test-1.0.1.tgz
-    version: 1.0.1
-  - apiVersion: v2
-    appVersion: 1.16.0
-    created: "2023-07-24T07:09:27.925052356Z"
-    description: A Helm chart for Kubernetes
-    digest: 975555263eebd8383696abc82075cfa99b3ec54ee65703d633b9c08a2bfde623
-    name: test
-    type: application
-    urls:
-    - https://github.com/mbaldessari/charts-test/releases/download/main/test-1.0.0.tgz
-    version: 1.0.0
-generated: "2023-07-24T07:09:27.895376158Z"
+generated: "2023-07-24T08:15:32.578778509Z"
