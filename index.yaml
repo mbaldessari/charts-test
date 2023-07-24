@@ -2,7 +2,7 @@ apiVersion: v1
 entries:
   acm:
   - apiVersion: v2
-    created: "2023-07-24T06:01:09.557531231Z"
+    created: "2023-07-24T06:01:20.512325817Z"
     description: A Helm chart to configure Advanced Cluster Manager for OpenShift
     digest: 487d8cfc0a0b34453e1a23a86f3860dafb8394b5877f567a84372891ceeb84ec
     keywords:
@@ -13,7 +13,7 @@ entries:
     version: 0.0.1
   clustergroup:
   - apiVersion: v2
-    created: "2023-07-24T06:01:09.564175216Z"
+    created: "2023-07-24T06:01:20.516977382Z"
     description: A Helm chart to create per-clustergroup ArgoCD applications and any
       required namespaces or subscriptions
     digest: 1a6df225fd63321d8610b49602675a4b742d8a10299763c6a19aadd826f5337b
@@ -23,10 +23,25 @@ entries:
     urls:
     - https://github.com/mbaldessari/charts-test/releases/download/main/clustergroup-0.0.1.tgz
     version: 0.0.1
+  golang-external-secrets:
+  - apiVersion: v2
+    created: "2023-07-24T06:01:20.525879614Z"
+    dependencies:
+    - name: external-secrets
+      repository: https://charts.external-secrets.io
+      version: 0.8.3
+    description: A Helm chart to configure the golang-based external-secrets
+    digest: 21a6ef972f57d287be68a8b3c8f9ea32d6b73c7c7c9cbda2a0eeefb0fc6bb7d0
+    keywords:
+    - pattern
+    name: golang-external-secrets
+    urls:
+    - https://github.com/mbaldessari/charts-test/releases/download/main/golang-external-secrets-0.0.1.tgz
+    version: 0.0.1
   test:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2023-07-24T06:01:09.566044912Z"
+    created: "2023-07-24T06:01:20.527816499Z"
     description: A Helm chart for Kubernetes
     digest: 493ca0d344b540ac98b43030fdd46e491354546036990c8c39894eb821e5ec8d
     name: test
@@ -36,7 +51,7 @@ entries:
     version: 1.1.5
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2023-07-24T06:01:09.565799512Z"
+    created: "2023-07-24T06:01:20.527576401Z"
     description: A Helm chart for Kubernetes
     digest: c8020c0651f6d6de7b89f1f6901eee8e0c2d306011362179635d11790b7f3a2c
     name: test
@@ -46,7 +61,7 @@ entries:
     version: 1.1.4
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2023-07-24T06:01:09.565577513Z"
+    created: "2023-07-24T06:01:20.527326903Z"
     description: A Helm chart for Kubernetes
     digest: 9fcfce0649639de88f215638f7b0380502e3379c4fee8323f127aa55a85a0d5b
     name: test
@@ -56,7 +71,7 @@ entries:
     version: 1.1.3
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2023-07-24T06:01:09.565350213Z"
+    created: "2023-07-24T06:01:20.527091405Z"
     description: A Helm chart for Kubernetes
     digest: d50e3b78bd99766a50e197021ee5ab336401b8b34fc38d64b5d0fa98d7ed7bde
     name: test
@@ -66,7 +81,7 @@ entries:
     version: 1.1.2
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2023-07-24T06:01:09.565131214Z"
+    created: "2023-07-24T06:01:20.526845607Z"
     description: A Helm chart for Kubernetes
     digest: c2eade4fe90d2eaabca84bff48dddd0b15180af56669f8a4b98390a6b7cbe8ad
     name: test
@@ -76,7 +91,7 @@ entries:
     version: 1.1.1
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2023-07-24T06:01:09.564907114Z"
+    created: "2023-07-24T06:01:20.526605008Z"
     description: A Helm chart for Kubernetes
     digest: b240363aaa67249d17e41cedb4b27d4ef9ec69678678e5f50e66a2032f862d0f
     name: test
@@ -86,7 +101,7 @@ entries:
     version: 1.1.0
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2023-07-24T06:01:09.564668615Z"
+    created: "2023-07-24T06:01:20.52634891Z"
     description: A Helm chart for Kubernetes
     digest: 4db4132978f190a6bc5d048d462ca0dbd7344ea0c459c6bdfac590128670a235
     name: test
@@ -96,7 +111,7 @@ entries:
     version: 1.0.1
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2023-07-24T06:01:09.564438615Z"
+    created: "2023-07-24T06:01:20.526134912Z"
     description: A Helm chart for Kubernetes
     digest: 975555263eebd8383696abc82075cfa99b3ec54ee65703d633b9c08a2bfde623
     name: test
@@ -104,4 +119,4 @@ entries:
     urls:
     - https://github.com/mbaldessari/charts-test/releases/download/main/test-1.0.0.tgz
     version: 1.0.0
-generated: "2023-07-24T06:01:09.554692238Z"
+generated: "2023-07-24T06:01:20.508648745Z"
