@@ -64,6 +64,8 @@ jobs:
 
       - name: Sign the chart
         shell: bash
+        env:
+          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
         run: |-
           set -euo pipefail
           echo ${{ secrets.GPG_SECRET_SUBKEY }} | base64 -d | gpg --batch --import
