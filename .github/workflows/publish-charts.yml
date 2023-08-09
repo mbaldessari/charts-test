@@ -21,6 +21,7 @@ env:
   SOURCE_TAG: "${{ inputs.SOURCE_TAG }}"
   SOURCE_REPO: "${{ inputs.SOURCE_REPO }}"
   SOURCE_BRANCH_OVERRIDE: "${{ inputs.SOURCE_BRANCH_OVERRIDE }}"
+  # FIXME(bandini): we need to change the defaults here
   UMBRELLA_REPO: "mbaldessari/charts-test"
   ASSETS_BASE_URL: "https://github.com/mbaldessari/charts-test/releases/download/main/"
 
@@ -60,6 +61,16 @@ jobs:
           echo "CHART_NAME=$(yq -r '.name' helm-repo/Chart.yaml)" >> $GITHUB_ENV
           echo "CHART_VERSION=$(yq -r '.version' helm-repo/Chart.yaml)" >> $GITHUB_ENV
           echo "CHART_TGZ=${CHART_TGZ}" >> $GITHUB_ENV
+
+      - name: Sign the chart
+        shell: bash
+        run: |-
+          set -euo pipefail
+          cat ${{ secrets.GPG_SECRET_SUBKEY }} | base64 -d | gpg --import
+          cat ${{ secrets.GPG_PUBLIC_KEY }} | base64 -d | gpg --import
+          pip install git+https://gitlab.com/mbaldessari/helm-sign.git@couple-of-fixes
+          helm-sign ${{ env.CHART_TGZ }}
+          helm verify ${{ env.CHART_TGZ }}
 
       - name: Upload helm package as a release asset
         uses: svenstaro/upload-release-action@v2
