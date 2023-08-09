@@ -66,8 +66,8 @@ jobs:
         shell: bash
         run: |-
           set -euo pipefail
-          echo ${{ secrets.GPG_SECRET_SUBKEY }} | base64 -d | gpg --import
-          echo ${{ secrets.GPG_PUBLIC_KEY }} | base64 -d | gpg --import
+          echo ${{ secrets.GPG_SECRET_SUBKEY }} | base64 -d | gpg --batch --import
+          echo ${{ secrets.GPG_PUBLIC_KEY }} | base64 -d | gpg --batch --import
           pip install git+https://gitlab.com/mbaldessari/helm-sign.git@couple-of-fixes
           helm-sign ${{ env.CHART_TGZ }}
           helm verify ${{ env.CHART_TGZ }}
