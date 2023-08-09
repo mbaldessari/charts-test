@@ -3,12 +3,12 @@ entries:
   letsencrypt:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2023-08-09T11:01:47.23655344Z"
+    created: "2023-08-09T11:04:53.102721343Z"
     description: A Helm chart to add letsencrypt support to Validated Patterns
-    digest: 524327e36cbbc25b255df21491e33f1e2b7917e63090d553028610972b3f8229
+    digest: 29e49886ca49613b7e6dd22503e290d2681226fd28e1a759fede2b5808826cc5
     name: letsencrypt
     type: application
     urls:
     - https://github.com/mbaldessari/charts-test/releases/download/main/letsencrypt-0.1.0.tgz
     version: 0.1.0
-generated: "2023-08-09T11:01:47.235729233Z"
+generated: "2023-08-09T11:04:53.101751875Z"
